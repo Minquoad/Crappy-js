@@ -53,19 +53,16 @@ var traverseFileTree = function (entry, list) {
     });
 };
 
-function loadFiles(items) {
+function recoverFiles(items, files) {
 
-    var listFiles = [];
     var promises = [];
 
     for (var i=0; i<items.length; i++) {
         var item = items[i].webkitGetAsEntry();
         if (item) {
-            promises.push(traverseFileTree(item, listFiles));
+            promises.push(traverseFileTree(item, files));
         }
     }
 
-    Promise.all(promises).then(function() {
-        analyseFiles(listFiles);
-    });
+    return Promise.all(promises);
 }
