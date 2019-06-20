@@ -1,5 +1,5 @@
 var files = [];
-loadFiles(e.originalEvent.dataTransfer.items, files).then(function() {
+recoverFiles(e.originalEvent.dataTransfer.items, files).then(function() {
     //do here something with the file in files
 });
 
