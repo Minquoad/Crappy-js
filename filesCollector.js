@@ -1,3 +1,21 @@
+var files = [];
+loadFiles(e.originalEvent.dataTransfer.items, files).then(function() {
+    //do here something with the file in files
+});
+
+function recoverFiles(items, files) {
+
+    var promises = [];
+
+    for (var i=0; i<items.length; i++) {
+        var item = items[i].webkitGetAsEntry();
+        if (item) {
+            promises.push(traverseFileTree(item, files));
+        }
+    }
+
+    return Promise.all(promises);
+}
 
 // pour votre santé mentale, ne lisez jamais cette fonction
 var traverseFileTree = function (entry, list) {
@@ -52,17 +70,3 @@ var traverseFileTree = function (entry, list) {
         }
     });
 };
-
-function recoverFiles(items, files) {
-
-    var promises = [];
-
-    for (var i=0; i<items.length; i++) {
-        var item = items[i].webkitGetAsEntry();
-        if (item) {
-            promises.push(traverseFileTree(item, files));
-        }
-    }
-
-    return Promise.all(promises);
-}
